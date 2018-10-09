@@ -1,0 +1,51 @@
+.card{
+  width: 227px;
+  box-sizing: border-box;
+  position: absolute;
+  font-size: 12px;
+  .card_h{
+    display: flex;
+    justify-content: space-around;
+    width: 227px;
+    padding-top: 45px;
+    height: 23px;
+    text-align: left;
+    cursor: move;
+    background: url('../../assets/images/tip1_h.gif') no-repeat left top;
+    .close{
+      cursor: pointer;
+      font-size: 16px;
+      position: relative;
+      top: -3px;
+    }
+  }
+  .card_c{
+    width: 200px;
+    padding-left: 12px;
+    padding-right: 15px;
+    min-height: 40px;
+    text-align: left;
+    line-height: 20px;
+    max-height: 160px;
+    word-wrap: break-word;
+    word-break: break-all;
+    overflow: hidden;
+    background: url("../../assets/images/tip1_c.gif") repeat-y;
+  }
+  .card_f{
+    display: flex;
+    justify-content: space-around;
+    width: 227px;
+    height: 53px;
+    padding-top: 20px;
+    background: url("../../assets/images/tip1_f.gif") no-repeat left top;
+    .name{
+      float: right;
+      padding-right: 15px;
+      text-align: right;
+      font-size: 14px;
+      line-height: 35px;
+      color: #C0F;
+    }
+  }
+}

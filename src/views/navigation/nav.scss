@@ -1,0 +1,23 @@
+.main-header-box{
+  width: 100%;
+  background-color: #fff;
+  box-shadow: 0 1px 2px 0 rgba(0,0,0,.05);
+  header{
+    height: 4rem;
+  }
+  ul.nav{
+    display: flex;
+    &>li{
+      line-height: 4rem;
+      padding: 0 1.6rem;
+      color: #71777c;
+      cursor: pointer;
+      a{
+        color: #71777c;
+      }
+    }
+    .active{
+      color: #007fff;
+    }
+  }
+}
