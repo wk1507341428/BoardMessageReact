@@ -3,6 +3,8 @@
   box-sizing: border-box;
   position: absolute;
   font-size: 12px;
+  user-select: none;
+  cursor: move;
   .card_h{
     display: flex;
     justify-content: space-around;
@@ -10,7 +12,6 @@
     padding-top: 45px;
     height: 23px;
     text-align: left;
-    cursor: move;
     background: url('../../assets/images/tip1_h.gif') no-repeat left top;
     .close{
       cursor: pointer;
