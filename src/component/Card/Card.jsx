@@ -1,12 +1,28 @@
 import React from 'react'
 import './card.scss'
+import { connect } from 'react-redux'
+// 常规dom的方式
+// mousedown 时绑定mouseover
+// mouseup 时解绑mouseover
+// 但是有没有react的思路呢
+// 思路一
+// mousedown时，设置一个阀门，通过这个值开启鼠标移动
+// mouseup时，关闭阀门
+// TODO 
+// 这个阀门是不是应该是全局的
 
+// 目前Card跟随鼠标移动逻辑
+// 设置一个全局的阀门(window.flag),阀门的主要目的实用来控制，mouseMove事件
+// 当鼠标左键点击Card之后，将阀门设置为true
+// 当鼠标在body上松开的时候，将阀门设置为false
 let body = document.getElementsByTagName("body")[0]
 body.addEventListener("mouseup",function(e){
     // 0表示左键
-    if(e.button!=0) return
+    if(e.button!==0) return
     window.flag = false
 })
+
+// TODOS 我想在这里存入redux中zIndex值
 
 class Card extends React.Component {
   constructor(){
@@ -18,7 +34,8 @@ class Card extends React.Component {
     let zIndex = window.zIndex
     this.setState({zIndex})
   }
-  // 钩子函数，当props传入该组件时触发
+  // 钩子函数，当props传入该组件时触发 // 不是说这个钩子要被废除了吗？
+  // 用什么代替
   componentWillReceiveProps(data){
     // TODO
     // 在这里触发Card的随机位置有弊端
@@ -45,18 +62,10 @@ class Card extends React.Component {
   // 点击鼠标左键,开启阀门
   handleMouseDown = (e)=>{
     // 0表示左键
-    if(e.button!=0) return
+    if(e.button!==0) return
     this.handleClick()
     window.flag = true
   }
-
-  // // TODO
-  // // 松开鼠标左键，关闭阀门，这个应该在全局下
-  // handleMouseUp = (e)=>{
-  //   // 0表示左键
-  //   if(e.button!=0) return
-  //   window.flag = false
-  // }
 
   // 跟随鼠标移动
   handleMove = (e)=>{
@@ -78,18 +87,9 @@ class Card extends React.Component {
     this.setState({x,y})
   }
 
-  // 常规dom的方式
-  // mousedown 时绑定mouseover
-  // mouseup 时解绑mouseover
-  // 但是有没有react的思路呢
-  // 思路一
-  // mousedown时，设置一个阀门，通过这个值开启鼠标移动
-  // mouseup时，关闭阀门
-  // TODO 
-  // 这个阀门是不是应该是全局的
-
-
   render() {
+    // TODO
+    // 通过ES6的结构解析来，重构这段代码
     // 在state中获取随机位置和z-index
     let state = this.state
     let position = {
@@ -108,7 +108,6 @@ class Card extends React.Component {
       <div ref="card" onClick={this.handleClick} 
         onMouseMove={this.handleMove}
         onMouseDown={this.handleMouseDown}
-        // onMouseUp={this.handleMouseUp}
         style={position} className="card">
         <div className="card_h">
           <div className="num">第[{data.id}]条 {data.time}</div>
@@ -119,7 +118,7 @@ class Card extends React.Component {
         </div>
         <div className="card_f">
           <div className="icon">
-            <img src={require('../../assets/images/bpic_1.gif')} />
+            <img alt="" src={require('../../assets/images/bpic_1.gif')} />
           </div>
           <div className="name">{data.name}</div>
         </div>
@@ -137,4 +136,4 @@ Card.defaultProps={
   }
 }
 
-export default Card
+export default connect()(Card)

@@ -4,7 +4,7 @@
 }
 
 $bgc:#f4f5f5;
-html,body,#root{
+html,body,#root,#app{
   height: 100%;
 }
 
@@ -20,7 +20,11 @@ li{
   list-style: none;
 }
 
-#root{
+img{
+  width: 100%;
+}
+
+.insideWall{
   background: url('../images/bg.gif');
   height: 100%;
 }

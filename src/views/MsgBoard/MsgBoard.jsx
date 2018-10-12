@@ -2,6 +2,7 @@ import React from 'react'
 import './MsgBoard.scss'
 import Card from '../../component/Card/Card'
 
+// TODO 尝试将这个zIndex放在redux中
 window.zIndex = 1
 window.flag = false
 
