@@ -1,6 +1,11 @@
 import React from 'react'
 import './card.scss'
 import { connect } from 'react-redux'
+import store from '../../store/store.js'
+import {addZIndex} from '../../store/actions/card-actions.js'
+// 引入actions
+import {deleteMessage} from '../../store/actions/message-actions'
+
 // 常规dom的方式
 // mousedown 时绑定mouseover
 // mouseup 时解绑mouseover
@@ -22,8 +27,6 @@ body.addEventListener("mouseup",function(e){
     window.flag = false
 })
 
-// TODOS 我想在这里存入redux中zIndex值
-
 class Card extends React.Component {
   constructor(){
     super()
@@ -31,7 +34,7 @@ class Card extends React.Component {
   }
   // 第一次渲染后调用，只在客户端，已经生成了对应得DOM结构
   componentDidMount(){
-    let zIndex = window.zIndex
+    let zIndex = store.getState().cardZindex
     this.setState({zIndex})
   }
   // 钩子函数，当props传入该组件时触发 // 不是说这个钩子要被废除了吗？
@@ -39,7 +42,7 @@ class Card extends React.Component {
   componentWillReceiveProps(data){
     // TODO
     // 在这里触发Card的随机位置有弊端
-    // 如果有动态的props传入会刷新随机位置
+    // 如果有动态的props传入会刷新随机位置,更改redux中的数据也会重新渲染数据
     let position = data.position
     this.computeCardPosition(position)
   }
@@ -55,7 +58,8 @@ class Card extends React.Component {
 
   // z-index 提升
   handleClick = ()=>{
-    let zIndex = ++window.zIndex
+    store.dispatch(addZIndex())
+    let zIndex = store.getState().cardZindex
     this.setState({zIndex})
   }
 
@@ -69,8 +73,7 @@ class Card extends React.Component {
 
   // 跟随鼠标移动
   handleMove = (e)=>{
-    let flag = window.flag
-    if(!flag) return
+    if(!window.flag) return
     let props = this.props
     let state = this.state
     let cardWidthHalf = state.cardWidth * .5
@@ -85,6 +88,12 @@ class Card extends React.Component {
     if(y<0)y=0
     if(y>boardHeight)y=boardHeight
     this.setState({x,y})
+  }
+
+  // 删除redux中的数据
+  handleDelete = (e)=>{
+    e.stopPropagation()
+    this.props.dispatch(deleteMessage(this.props.data.id))
   }
 
   render() {
@@ -105,15 +114,13 @@ class Card extends React.Component {
     }
 
     return (
-      <div ref="card" onClick={this.handleClick} 
-        onMouseMove={this.handleMove}
-        onMouseDown={this.handleMouseDown}
+      <div ref="card"
         style={position} className="card">
         <div className="card_h">
           <div className="num">第[{data.id}]条 {data.time}</div>
-          <div className="close" title="关闭纸条">×</div>
+          <div onClick={this.handleDelete} className="close" title="关闭纸条">×</div>
         </div>
-        <div className="card_c">
+        <div onMouseMove={this.handleMove} onMouseDown={this.handleMouseDown} className="card_c">
           {data.content}
         </div>
         <div className="card_f">
@@ -124,15 +131,6 @@ class Card extends React.Component {
         </div>
       </div>
     )
-  }
-}
-
-// 设置props默认值
-Card.defaultProps={
-  data:{},
-  position:{
-    width:960,
-    heightL:562
   }
 }
 

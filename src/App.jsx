@@ -3,43 +3,44 @@ import React from 'react'
 import Navigation from './views/navigation/nav'
 import {
   BrowserRouter as Router,
-  Route
+  Route,
+  Switch,
+  Redirect
 } from 'react-router-dom'
-// 加载留言板组件
-import MsgBoard from './views/MsgBoard/MsgBoard'
-// 加载留言界面
-import LeaveMsg from './views/LeaveMsg/LeaveMsg'
 // 加载登陆页面
 import LoginPage from './views/LoginPage/LoginPage'
+import {MainRouter} from './router/index'
 
+// 感觉这应该需要一个children路由，这才是正确的逻辑
 class InsideWall extends React.Component {
   render() {
     return (
       <div className="insideWall">
-        <Navigation />
-        <div className="container">
-          <Route exact path="/" component={MsgBoard} />
-          <Route path="/LeaveMsg" component={LeaveMsg} />
+        <Navigation MainRouter={MainRouter} />
+        <div className="container main">
+        <Switch>
+          {MainRouter.map((route,i)=>{
+              return <Route key={i} path={route.path} component={route.component} />
+          })}
+          <Redirect from="/" to="/index" exact />
+        </Switch> 
         </div>
       </div>
     )
   }
 }
 
+// 设置一个全局的变量来控制可以是可以，但是一定不是正规的做法
 class App extends React.Component {
   constructor() {
     super()
-    this.state = {
-      show: false
-    }
   }
   render() {
     return (
-      <Router>
+      <Router basename="/">
         <div id="app">
-          {
-            true ? <InsideWall /> :<Route path="/login" component={LoginPage} />
-          }
+          <InsideWall />
+          <Route path="/login" component={LoginPage} />
         </div>
       </Router>
     )

@@ -1,12 +1,14 @@
 import { combineReducers } from 'redux'
-import productsReducer from './products-reducer'
 import cartReducer from './cart-reducer'
 import cardReducer from './card-reducer'
+import msgReducer from './message-reducers'
+import routeRedcer from './route-reducer'
 
 const allReducers = {
-  products: productsReducer,
   shoppingCart: cartReducer,
-  cardZindex: cardReducer
+  cardZindex: cardReducer,
+  messageBox: msgReducer,
+  route:routeRedcer
 }
 
 const rootReducer = combineReducers(allReducers);

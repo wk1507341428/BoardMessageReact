@@ -1,0 +1,27 @@
+.leaveMsg{
+  position: relative;
+  min-width: 800px;
+  min-height: 562px;
+  height: calc(100% - 64px);
+  padding: 5px 10px;
+  box-sizing: border-box !important;
+  overflow: hidden;
+  background: url('../../assets/images/content_bg.jpg');
+  form{
+    margin-top: 100px;
+    .form-group{
+      display: flex;
+      align-items: center;
+      margin-top: 30px;
+    }
+    .btn-wrapper{
+      justify-content: center;
+    }
+    .control-label{
+      text-align: right;
+    }
+    textarea{
+      resize: none;
+    }
+  }
+}

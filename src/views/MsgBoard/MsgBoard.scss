@@ -2,6 +2,6 @@
   position: relative;
   min-width: 800px;
   min-height: 562px;
-  // overflow: hidden;
+  height: calc(100% - 64px);
   background: url('../../assets/images/content_bg.jpg');
 }
