@@ -43,11 +43,11 @@ class Brckground extends React.Component {
               })(
                 <Checkbox>Remember me</Checkbox>
               )}
-              <a className="login-form-forgot" href="">Forgot password</a>
+              <a className="login-form-forgot" href="https://www.baidu.com">Forgot password</a>
               <Button type="primary" htmlType="submit" className="login-form-button">
                 Log in
               </Button>
-              Or <a href="">register now!</a>
+              Or <a href="https://www.baidu.com">register now!</a>
             </FormItem>
           </Form>
         </div>      

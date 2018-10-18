@@ -11,6 +11,8 @@ import {
 import LoginPage from './views/LoginPage/LoginPage'
 import {MainRouter} from './router/index'
 
+import leaveMsg from './views/LeaveMsg/LeaveMsg'
+
 // 感觉这应该需要一个children路由，这才是正确的逻辑
 class InsideWall extends React.Component {
   render() {
@@ -20,27 +22,27 @@ class InsideWall extends React.Component {
         <div className="container main">
         <Switch>
           {MainRouter.map((route,i)=>{
-              return <Route key={i} path={route.path} component={route.component} />
+            return <Route key={i} path={route.path} component={route.component} />
           })}
-          <Redirect from="/" to="/index" exact />
-        </Switch> 
+          <Route path="/details/edit" exact component={leaveMsg} />
+          <Redirect from="*" to="/details/index" exact />
+        </Switch>
         </div>
       </div>
     )
   }
 }
 
-// 设置一个全局的变量来控制可以是可以，但是一定不是正规的做法
 class App extends React.Component {
-  constructor() {
-    super()
-  }
   render() {
     return (
       <Router basename="/">
         <div id="app">
-          <InsideWall />
-          <Route path="/login" component={LoginPage} />
+          <Switch>
+            <Route path="/details" component={InsideWall} />
+            <Route path="/login" component={LoginPage} />
+            <Redirect from="/" to="/details/index" exact />
+          </Switch>
         </div>
       </Router>
     )

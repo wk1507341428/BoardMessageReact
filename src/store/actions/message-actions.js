@@ -20,4 +20,10 @@ export function addMessage(name,content,time){
   }
 }
 
-
+// 修改的actions
+export function updateMessage(id,name,content,time){
+  return {
+    type: UPDATE_MESSAGE,
+    payload: {id,name,content,time}
+  }
+}

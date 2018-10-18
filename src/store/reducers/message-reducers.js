@@ -30,6 +30,16 @@ export default function(state=initialState, action) {
       ]
     }
 
+    case UPDATE_MESSAGE: {
+      state = state.map((item)=>{
+        if(item.id===action.payload.id){
+          item = action.payload
+        }
+        return item
+      })
+      return[...state]
+    }
+
     default:
       return state
   }

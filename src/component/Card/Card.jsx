@@ -2,6 +2,7 @@ import React from 'react'
 import './card.scss'
 import { connect } from 'react-redux'
 import store from '../../store/store.js'
+import {withRouter} from "react-router-dom";
 import {addZIndex} from '../../store/actions/card-actions.js'
 // 引入actions
 import {deleteMessage} from '../../store/actions/message-actions'
@@ -96,6 +97,12 @@ class Card extends React.Component {
     this.props.dispatch(deleteMessage(this.props.data.id))
   }
 
+  // 修改留言
+  handleEditMessage = ()=>{
+    // 这样可以把参数传到对应路由的props的location中
+    this.props.history.push({pathname:'/details/edit',state:{data:this.props.data}})
+  }
+
   render() {
     // TODO
     // 通过ES6的结构解析来，重构这段代码
@@ -124,7 +131,7 @@ class Card extends React.Component {
           {data.content}
         </div>
         <div className="card_f">
-          <div className="icon">
+          <div onClick={this.handleEditMessage} className="icon">
             <img alt="" src={require('../../assets/images/bpic_1.gif')} />
           </div>
           <div className="name">{data.name}</div>
@@ -134,4 +141,4 @@ class Card extends React.Component {
   }
 }
 
-export default connect()(Card)
+export default connect()(withRouter(Card))

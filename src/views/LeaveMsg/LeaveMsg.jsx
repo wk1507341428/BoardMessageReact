@@ -1,8 +1,9 @@
 import React from 'react'
 import './leaveMsg.scss'
 import { connect } from 'react-redux'
-import { addMessage } from '../../store/actions/message-actions'
+import { addMessage,updateMessage } from '../../store/actions/message-actions'
 import Xdate from '../../assets/js/Xdate.js'
+import {withRouter} from "react-router-dom";
 import { message } from 'antd'
 
 class LeaveMsg extends React.Component {
@@ -13,9 +14,16 @@ class LeaveMsg extends React.Component {
       content:""
     }
   }
+
+  componentDidMount(){
+    let data = this.props.location&&this.props.location.state&&this.props.location.state.data
+    if(data){
+      this.setState({name:data.name,content:data.content,id:data.id})
+    }
+  }
   
   handleSubmit = ()=>{
-    let {name,content} = this.state
+    let {name,content,id} = this.state
     // 做一下验证吧
     if(name.trim()===""||content.trim()===""){
       return message.error("请填写完整内容")
@@ -23,18 +31,25 @@ class LeaveMsg extends React.Component {
     // 记录一下提交时间
     let date = new Date().getTime()
     let time = new Xdate(date).format('yyyy-MM-dd HH:mm:ss')
-    // 存值
-    this.props.dispatch(addMessage(name,content,time))
-    // 成功验证
-    message.success('添加成功')
-    this.setState({name:"",content:"",time:""})
+    if(id){
+      // 改值
+      this.props.dispatch(updateMessage(id,name,content,time))
+      // 成功验证
+      message.success('修改成功')
+      this.props.history.push({pathname:'/details/index'})
+    }
+    else{
+      // 存值
+      this.props.dispatch(addMessage(name,content,time))
+      // 成功验证
+      message.success('添加成功')
+      this.setState({name:"",content:"",time:""})
+    }
   }
 
   handleChange = (event)=>{
     let val = event.target.name
     this.setState({[val]:event.target.value})
-    // 在这里怎么做验证呢
-    
   }
 
   render() {
@@ -69,4 +84,4 @@ class LeaveMsg extends React.Component {
   }
 }
     
-export default connect()(LeaveMsg)
+export default connect()(withRouter(LeaveMsg))
